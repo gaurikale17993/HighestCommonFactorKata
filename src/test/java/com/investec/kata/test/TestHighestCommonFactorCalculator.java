@@ -5,43 +5,52 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import com.investec.kata.main.HighestCommonFactorCalculator;
+import com.investec.kata.main.ValidateInput;
 
 @Test
 public class TestHighestCommonFactorCalculator {
-	private HighestCommonFactorCalculator hcfCalculator;
-	private int[] numbers;
+	
+	private ValidateInput validateInput;
+	private HighestCommonFactorCalculator highestCommonFactorCalculator;
+	private int[] inputArray;
 	
 	@BeforeTest
 	public void init() {
-		hcfCalculator = new HighestCommonFactorCalculator();
+		validateInput = new ValidateInput();
+		highestCommonFactorCalculator = new HighestCommonFactorCalculator();
 	}
 	
 	@Test(expectedExceptions = Exception.class,expectedExceptionsMessageRegExp = "Enter atleast two integers")
-	public void emptyArrayThrowsException() throws Exception {
-		numbers = new int[0];
-		hcfCalculator.validateCalculateHCF(numbers);
+	public void shouldThrowExceptionIfEmptyArrayIsPassed() throws Exception {
+		inputArray = new int[0];
+		validateInput.validateInputProvided(inputArray);
 	}
 	
 	@Test(expectedExceptions = Exception.class,expectedExceptionsMessageRegExp = "Enter atleast two integers")
-	public void singleElementArrayThrowsException() throws Exception {
-		numbers = new int[1];
-		numbers[0] = 1;
-		hcfCalculator.validateCalculateHCF(numbers);
+	public void shouldThrowExceptionIfSingleElementInArray() throws Exception {
+		inputArray = new int[1];
+		inputArray[0] = 1;
+		validateInput.validateInputProvided(inputArray);
 	}
 	
-	public void hcfOfIntegerArray() throws Exception {
-		numbers = new int[]{8,6,4,2};
-		assertEquals(hcfCalculator.validateCalculateHCF(numbers), 2);
+	public void shouldReturnHighestCommonFactorAsIntegerForArrayOfIntegers() throws Exception {
+		inputArray = new int[]{8,6,4,2};
+		assertEquals(highestCommonFactorCalculator.calculate(inputArray), 2);
 	}
 	
-	@Test(expectedExceptions = Exception.class,expectedExceptionsMessageRegExp = "HCF is undefined")
-	public void allZerosInIntegerArrayThrowsException() throws Exception {
-		numbers = new int[]{0,0,0};
-		hcfCalculator.validateCalculateHCF(numbers);
+	@Test(expectedExceptions = Exception.class,expectedExceptionsMessageRegExp = "Highest Common Factor is undefined for given input array")
+	public void shouldThrowExceptionIfAllElementsAreZeroInIntegerArray() throws Exception {
+		inputArray = new int[]{0,0,0};
+		highestCommonFactorCalculator.calculate(inputArray);
 	}
 	
-	public void negativeIntegerArrayHCF() throws Exception {
-		numbers = new int[]{-8,-4};
-		assertEquals(hcfCalculator.validateCalculateHCF(numbers), 4);
+	public void shouldReturnPositiveHighestCommonFactorForNegativeElementsInIntegerArray() throws Exception {
+		inputArray = new int[]{-8,-4};
+		assertEquals(highestCommonFactorCalculator.calculate(inputArray), 4);
+	}
+	
+	public void shouldReturnHighestCommonFactorAsPositiveIntegerForArrayOfIntegersWithAllPossibleValues() throws Exception{
+		inputArray = new int[]{-8,2,0};
+		assertEquals(highestCommonFactorCalculator.calculate(inputArray), 2);
 	}
 }
