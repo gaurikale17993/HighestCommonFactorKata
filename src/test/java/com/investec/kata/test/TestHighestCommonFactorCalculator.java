@@ -4,6 +4,8 @@ import static org.testng.Assert.assertEquals;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
+import com.investec.kata.exceptions.AllElementsZeroException;
+import com.investec.kata.exceptions.MinimumTwoIntegersRequiredException;
 import com.investec.kata.main.HighestCommonFactorCalculator;
 import com.investec.kata.main.ValidateInput;
 
@@ -20,13 +22,13 @@ public class TestHighestCommonFactorCalculator {
 		highestCommonFactorCalculator = new HighestCommonFactorCalculator();
 	}
 	
-	@Test(expectedExceptions = Exception.class,expectedExceptionsMessageRegExp = "Enter atleast two integers")
+	@Test(expectedExceptions = MinimumTwoIntegersRequiredException.class,expectedExceptionsMessageRegExp = "Enter atleast two integers")
 	public void shouldThrowExceptionIfEmptyArrayIsPassed() throws Exception {
 		inputArray = new int[0];
 		validateInput.validateInputProvided(inputArray);
 	}
 	
-	@Test(expectedExceptions = Exception.class,expectedExceptionsMessageRegExp = "Enter atleast two integers")
+	@Test(expectedExceptions = MinimumTwoIntegersRequiredException.class,expectedExceptionsMessageRegExp = "Enter atleast two integers")
 	public void shouldThrowExceptionIfSingleElementInArray() throws Exception {
 		inputArray = new int[1];
 		inputArray[0] = 1;
@@ -38,7 +40,7 @@ public class TestHighestCommonFactorCalculator {
 		assertEquals(highestCommonFactorCalculator.calculate(inputArray), 2);
 	}
 	
-	@Test(expectedExceptions = Exception.class,expectedExceptionsMessageRegExp = "Highest Common Factor is undefined for given input array")
+	@Test(expectedExceptions = AllElementsZeroException.class,expectedExceptionsMessageRegExp = "Highest Common Factor is undefined for given input array")
 	public void shouldThrowExceptionIfAllElementsAreZeroInIntegerArray() throws Exception {
 		inputArray = new int[]{0,0,0};
 		highestCommonFactorCalculator.calculate(inputArray);

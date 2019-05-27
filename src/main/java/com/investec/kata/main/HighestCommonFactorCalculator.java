@@ -1,7 +1,10 @@
 package com.investec.kata.main;
 
+import com.investec.kata.exceptions.AllElementsZeroException;
+import com.investec.kata.exceptions.MinimumTwoIntegersRequiredException;
+
 public class HighestCommonFactorCalculator {
-	public int calculate(int[] inputArray) throws Exception {
+	public int calculate(int[] inputArray) throws MinimumTwoIntegersRequiredException, AllElementsZeroException {
 		ValidateInput validateInput = new ValidateInput();
 		validateInput.validateInputProvided(inputArray);
 		
@@ -10,7 +13,7 @@ public class HighestCommonFactorCalculator {
 			result = highestCommonFactorAmongstTwoElements(inputArray[i],result);
 		}
 		if(result == 0)
-			throw new Exception("Highest Common Factor is undefined for given input array");
+			throw new AllElementsZeroException("Highest Common Factor is undefined for given input array");
 		
 		if(result < 0)
 			return -result;
